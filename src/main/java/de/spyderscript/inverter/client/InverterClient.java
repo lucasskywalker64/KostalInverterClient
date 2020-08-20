@@ -14,27 +14,30 @@ public class InverterClient {
 
     public InverterClient(ModbusClient modbusClient) {
         this.modbusClient = modbusClient;
-        try {
-            init();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public InverterClient(InetSocketAddress inetSocketAddress, byte unitID) {
         this.modbusClient = new ModbusClient(inetSocketAddress, unitID);
-        try {
-            init();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
-    private void init() throws IOException {
+    public boolean isConnected() {
+        return modbusClient.isConnected();
+    }
+
+    public void connect() throws IOException {
         modbusClient.connect();
     }
 
-    public InverterAddressResponse get(InverterAddress address) throws IOException, ModbusException {
+    public void disconnect() throws IOException {
+        modbusClient.disconnect();
+    }
+
+    public void close() throws IOException {
+        this.disconnect();
+    }
+
+    public InverterAddressResponse read(InverterAddress address) throws IOException, ModbusException {
+        if(!modbusClient.isConnected()) throw new IllegalStateException("Modbus client is not connected.");
         Object data = PayloadDecoder.fromRegisters(modbusClient.readHoldingRegisters(address.getAddress(), address.getQuantity())).decode(address.getFormat());
         return new InverterAddressResponse(address, data);
     }

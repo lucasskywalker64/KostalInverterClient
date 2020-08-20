@@ -103,7 +103,7 @@ public class ModbusClient {
                 };
     }
 
-    private boolean isConnected() {
+    public boolean isConnected() {
         return socket != null && socket.isConnected();
     }
 

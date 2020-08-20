@@ -68,27 +68,25 @@ public class PayloadDecoder {
         return registers[0] == 1;
     }
 
-    //TODO: Add support for U32
+    // TODO: Add support for U32
     public Object decode(Format format) {
         System.out.println("Registers: " + Arrays.toString(registers) + " Format: " + format);
         switch (format) {
             case U16:
-                if(registers.length == 1) {
-                    return decodeInt16();
-                } else if(registers.length == 2) {
-                    return decodeU16_2();
+                if(registers.length == 2) {
+                    return this.decodeU16_2();
                 }
-                return decodeInt16();
+                return this.decodeInt16();
             case S16:
-                return decodeInt16();
+                return this.decodeInt16();
             case STRING:
-                return decodeString();
+                return this.decodeString();
             case FLOAT:
-                return decodeFloat();
+                return this.decodeFloat();
             case BOOLEAN:
-                return decodeBoolean();
+                return this.decodeBoolean();
             default:
-                return null;
+                throw new UnsupportedOperationException("The format \"" + format + "\" is currently not supported.");
         }
     }
 }
