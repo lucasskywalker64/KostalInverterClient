@@ -22,6 +22,8 @@ Maven:
   <version>VERSION</version>
 </dependency>
 ```
+JAR:
+Download the [latest release](https://github.com/SpyderScript/KostalInverterClient/releases/latest).
 
 
 ### Code example
