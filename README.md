@@ -19,7 +19,7 @@ Maven:
 <dependency>
   <groupId>com.github.spyderscript</groupId>
   <artifactId>KostalInverterClient</artifactId>
-  <version>VERSION</version>
+  <version>1.1</version>
 </dependency>
 ```
 JAR:
