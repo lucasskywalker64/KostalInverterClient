@@ -70,7 +70,6 @@ public class PayloadDecoder {
 
     // TODO: Add support for U32
     public Object decode(Format format) {
-        System.out.println("Registers: " + Arrays.toString(registers) + " Format: " + format);
         switch (format) {
             case U16:
                 if(registers.length == 2) {
