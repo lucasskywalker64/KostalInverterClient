@@ -68,7 +68,25 @@ public class PayloadDecoder {
         return registers[0] == 1;
     }
 
-    // TODO: Add support for U32
+    public int decodeU32() {
+        if (registers.length != 2) {
+            throw new IllegalArgumentException("Input Array length invalid");
+        } else {
+            int[] swappedRegisters = new int[]{registers[1], registers[0]};
+            int highRegister = swappedRegisters[1];
+            int lowRegister = swappedRegisters[0];
+            byte[] highRegisterBytes = toByteArray(highRegister);
+            byte[] lowRegisterBytes = toByteArray(lowRegister);
+            byte[] doubleBytes = new byte[]{highRegisterBytes[1], highRegisterBytes[0], lowRegisterBytes[1], lowRegisterBytes[0]};
+            return ByteBuffer.wrap(doubleBytes).getInt();
+        }
+    }
+
+    public static byte[] toByteArray(int value) {
+        byte[] result = new byte[]{(byte)value, (byte)(value >> 8)};
+        return result;
+    }
+
     public Object decode(Format format) {
         switch (format) {
             case U16:
@@ -84,6 +102,8 @@ public class PayloadDecoder {
                 return this.decodeFloat();
             case BOOLEAN:
                 return this.decodeBoolean();
+            case U32:
+                return this.decodeU32();
             default:
                 throw new UnsupportedOperationException("The format \"" + format + "\" is currently not supported.");
         }
