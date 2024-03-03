@@ -54,9 +54,6 @@ public class ModbusClient {
 
     public void disconnect() throws IOException {
         if (socket != null) {
-            socket.getInputStream().close();
-            socket.getOutputStream().close();
-
             socket.close();
         }
     }
